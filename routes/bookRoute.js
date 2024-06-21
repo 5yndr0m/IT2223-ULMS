@@ -42,4 +42,36 @@ router.delete('/deleteBook/:id', async (req, res) => {
         res.status(400).json({ message: 'Error deleting book', error });
     }
 })
+
+//reccomend
+router.get('/:isbn', async (req, res) => {
+    try {
+        const isbn = req.params.isbn;
+        const result = await Book.find({ isbn: isbn });
+        if (result.length > 0) {
+            res.status(200).json(result);
+        } else {
+            res.status(404).json({ message: "Books not found for the given isbn"});
+        }
+    } catch (error) {
+        console.error('Error fetching books for isbn:', error);
+        res.status(500).json({ message: 'Server error', error });
+    }
+});
+
+//reccomend
+router.get('/genre/:genre', async (req, res) => {
+    try {
+        const genre = req.params.genre;
+        const result = await Book.find({ genre: genre });
+        if (result.length > 0) {
+            res.status(200).json(result);
+        } else {
+            res.status(404).json({ message: "Books not found for the given genre"})
+        }
+    } catch (error) {
+        console.error('Error fetching books for genre:', error);
+        res.status(500).json({ message: 'Server error', error });
+    }
+});
 module.exports = router;

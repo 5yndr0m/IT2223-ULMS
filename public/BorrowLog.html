@@ -1,1 +1,88 @@
 <!-- HTML file for borrowed book details -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="">
+    <div class="container">
+        <header>
+            <h1>Library Management System</h1>
+        </header>
+        <ul>
+            <li>
+                <a href="index.html">
+                    Home
+                </a>
+            </li>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">
+                    Books
+                </a>
+                <div class="dropdown-content">
+                    <a href="Books.html">Add Book</a>
+                    <a href="UpdateBook.html">Update Book</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">
+                    Borrow
+                </a>
+                <div class="dropdown-content">
+                    <a href="Borrow.html">Borrow Book</a>
+                    <a href="Return.html">Return Book</a>
+                    <a href="BorrowLog.html">Borrow Logs</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+   
+    <main>
+        <section id="searchBorrowBook" class="normalsection">
+            <h2>Search Borrowed Books</h2>
+            <form id="searchBorrowBookForm">
+                <input type="text" id="searchBorrowQuery" name="searchBorrowQuery" placeholder="Book ISBN">
+                <button type="submit">Search</button>
+            </form>
+            <div id="searchBorrowBookResults">
+                <table>
+                  <thead>
+                    <tr>
+                        <th>User Name</th>
+                        <th>Borrowed Date</th>
+                        <th>Return Date</th>
+                    </tr>
+                  </thead>
+                  <tbody id="borrowResultsTable"></tbody>  </table>
+              </div>
+        </section>
+        <section id="allBorrows" class="normalsection">
+            <h2>All Borrowd Books</h2>
+            <form id="allBorrowsForm">
+                <button type="submit">Show</button>
+            </form>
+            <div id="allBorrowsResult">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>User Id</th>
+                      <th>User Name</th>
+                      <th>user Email</th>
+                      <th>User Contact</th>
+                      <th>bookId</th>
+                      <th>Borrowed Day</th>
+                      <th>Return Day</th>
+                      <th>Returned Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="allBorrowResultsTable"></tbody>  </table>
+              </div>
+        </section>
+        
+    </main>
+    <script src="scripts.js"></script>
+</body>
+</html>

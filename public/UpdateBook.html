@@ -1,1 +1,119 @@
 <!-- HTML file for update book details -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="">
+    <div class="container">
+        <header>
+            <h1>Library Management System</h1>
+        </header>
+        <ul>
+            <li>
+                <a href="index.html">
+                    Home
+                </a>
+            </li>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">
+                    Books
+                </a>
+                <div class="dropdown-content">
+                    <a href="Books.html">Add Book</a>
+                    <a href="UpdateBook.html">Update Book</a>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">
+                    Borrow
+                </a>
+                <div class="dropdown-content">
+                    <a href="Borrow.html">Borrow Book</a>
+                    <a href="Return.html">Return Book</a>
+                    <a href="BorrowLog.html">Borrow Logs</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+   
+    <main>
+        <section id="searchBook">
+            <h2>Search Book</h2>
+            <form id="searchBookForm">
+                <label for="searchType">Search By:</label>
+                <select id="searchType" name="searchType">
+                    <option value="name">Name</option>
+                    <option value="author">Author</option>
+                    <option value="isbn">ISBN</option>
+                    <option value="year">Year</option>
+                </select>
+                <input type="text" id="searchQuery" name="searchQuery" placeholder="Enter search query">
+                <button type="submit">Search</button>
+            </form>
+            <div id="searchResults"></div>
+        </section>
+        <div class="image1">
+            <img id="img1" src="./assets/coffee-8595772_1280.jpg" alt="Books image">
+        </div>
+        <section id="updateBook">
+            <h2 class="title">Upload Book</h2>
+            <div class="container">
+                <form id="updateBookForm">
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="name">Name:</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="text" id="updateName" name="name" placeholder="Name" class="addBookInputs" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="name">Author:</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="text" id="updateAuthor" name="author" placeholder="Author" class="addBookInputs" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="name">ISBN:</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="text" id="updateISBN" name="isbn" placeholder="ISBN" class="addBookInputs" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="name">Year:</label>
+                        </div>
+                        <div class="col-75">
+                            <input type="number" id="updateYear" name="year" placeholder="Year" class="addBookInputs" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                            <label for="name">Copies available:</label>
+                        </div>  
+                        <div class="col-75">
+                            <input type="number" id="updateCopies" name="copies" placeholder="Number of Copies" class="addBookInputs" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button type="submit">Update Book</button>
+                        <button type="delete">Delete Book</button>
+                    </div>
+                </form>
+            </div>
+            
+            <div id="updateBookResult"></div>
+        </section>
+        
+    </main>
+    <script src="scripts.js"></script>
+</body>
+</html>

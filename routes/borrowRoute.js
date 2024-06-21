@@ -59,4 +59,19 @@ router.post('/borrowBook', async (req, res) => {
 
 });
 
+//reccomend
+router.get('/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const result = await Borrow.find({ userId: userId });
+        if (result.length > 0) {
+            res.status(200).json(result);
+        } else {
+            res.status(404).send("Books not found for the given userId");
+        }
+    } catch (error) {
+        console.error('Error fetching books for userId:', error);
+        res.status(500).json({ message: 'Server error', error });
+    }
+});
 module.exports = router;

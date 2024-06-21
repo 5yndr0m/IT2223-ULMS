@@ -81,8 +81,7 @@ By providing a comprehensive platform for library management, the project aims t
    ```
     npm install
     ```
-4. Create an env file inside the root directory (`.env`).
-5. Type the following command in the terminal to start the backend:
+3. Type the following command in the terminal to start the backend:
     ```
     npm start
     ```

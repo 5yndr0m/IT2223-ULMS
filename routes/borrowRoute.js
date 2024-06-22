@@ -58,7 +58,28 @@ router.post('/borrowBook', async (req, res) => {
     }
 
 });
-
+router.post('/returnBook', async (req, res) => {
+    const { userId, bookId } = req.body;
+    try {
+        const borrow = await Borrow.findOneAndUpdate({
+            userId: userId, 
+            bookId: bookId,
+            returned: false,
+        }, { returned: true });
+        if (borrow) {
+            const book = await Book.findOne({ isbn: bookId });
+            if (book) {
+                book.copies += 1;
+                await book.save();
+            }
+            res.json({ message: 'Book returned successfully' });
+        } else {
+            res.json({ message: 'Return error: book not borrowed by this user' });
+        }
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
 //reccomend
 router.get('/:userId', async (req, res) => {
     try {

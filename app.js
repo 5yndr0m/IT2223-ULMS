@@ -1,8 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const bookRoute = require('./route/bookRoute');
-const borrowRoute = require('./route/borrowRoute');
+const bookRoute = require('./routes/bookRoute');
+const borrowRoute = require('./routes/borrowRoute');
 
 const app = express();
 const port = 3000;

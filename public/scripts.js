@@ -1,4 +1,3 @@
-//client side scripting
 document.addEventListener('DOMContentLoaded', () => {
     const searchBookForm = document.getElementById('searchBookForm');
     if (searchBookForm) {
@@ -38,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
             fetch(`http://localhost:3000/borrow/searchBook?query=${searchQuery}`)
                 .then(response => response.json())
                 .then(data => {
-                    // borrowResultsTable.innerHTML = '';
+                    borrowResultsTable.innerHTML = '';
                     if (data.length > 0) {
                         data.forEach(borrow => {
                             const tr = document.createElement('tr');
@@ -86,6 +85,46 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Element allBorrowResultsForm not found');
     }
 
+    const addBookForm = document.getElementById('addBookForm');
+    if (addBookForm) {
+        addBookForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const newBook = {
+                name: document.getElementById('addName').value,
+                author: document.getElementById('addAuthor').value,
+                isbn: document.getElementById('addISBN').value,
+                year: parseInt(document.getElementById('addYear').value),
+                copies: parseInt(document.getElementById('addCopies').value)
+            };
+
+            fetch('http://localhost:3000/book/addBook', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newBook),
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultDiv = document.getElementById('addBookResult');
+                if (data.message) {
+                    resultDiv.innerHTML = `<p>${data.message}</p>`;
+                    addBookForm.reset();
+                } else {
+                    resultDiv.innerHTML = `<p>Error: ${data.error.message}</p>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const resultDiv = document.getElementById('addBookResult');
+                resultDiv.innerHTML = `<p>Error: ${error.message}</p>`;
+            });
+        });
+    } else {
+        console.error('Element addBookForm not found');
+    }
+
     const updateBookForm = document.getElementById('updateBookForm');
     if (updateBookForm) {
         updateBookForm.addEventListener('submit', function(event) {
@@ -125,7 +164,67 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Element updateBookResult not found');
     }
 
-    //Reccomend books
+    const borrowBookForm = document.getElementById('borrowBookForm');
+    if (borrowBookForm) {
+        borrowBookForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const borrowDetails = {
+                userId: document.getElementById('borrowUserId').value,
+                userName: document.getElementById('borrowUserName').value,
+                userEmail: document.getElementById('borrowUserEmail').value,
+                userContact: document.getElementById('borrowUserContact').value,
+                bookId: document.getElementById('borrowBookId').value
+            };
+
+            fetch('http://localhost:3000/borrow/borrowBook', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(borrowDetails),
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultDiv = document.getElementById('borrowBookResult');
+                resultDiv.innerHTML = `<p>${data.message}</p>`;
+                borrowBookForm.reset();
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    } else {
+        console.error('Element borrowBookForm not found');
+    }
+
+    const returnBookForm = document.getElementById('returnBookForm');
+    if (returnBookForm) {
+        returnBookForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const returnDetails = {
+                userId: document.getElementById('returnUserId').value,
+                bookId: document.getElementById('returnBookId').value,
+            };
+
+            fetch('http://localhost:3000/borrow/returnBook', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(returnDetails),
+            })
+            .then(response => response.json())
+            .then(data => {
+                const resultDiv = document.getElementById('returnBookResult');
+                resultDiv.innerHTML = `<p>${data.message}</p>`;
+                returnBookForm.reset();
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    } else {
+        console.error('Element returnBookForm not found');
+    }
+
     const reccomendBookForm = document.getElementById('reccomendBookForm');
     if (reccomendBookForm) {
         reccomendBookForm.addEventListener('submit', function(event) {
@@ -175,107 +274,4 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
         console.error('Element searchBorrowBookForm not found');
     }
-
-    //addBook
-    const addBookForm = document.getElementById('addBookForm');
-    if (addBookForm) {
-        addBookForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            const newBook = {
-                name: document.getElementById('addName').value,
-                author: document.getElementById('addAuthor').value,
-                isbn: document.getElementById('addISBN').value,
-                genre: document.getElementById('addGenre').value,
-                year: parseInt(document.getElementById('addYear').value),
-                copies: parseInt(document.getElementById('addCopies').value)
-            };
-            
-            fetch('http://localhost:3000/book/addBook', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(newBook),
-            })
-            .then(response => response.json())
-            .then(data => {
-                const resultDiv = document.getElementById('addBookResult');
-                if (data.message) {
-                    resultDiv.innerHTML = `<p>${data.message}</p>`;
-                } else {
-                    resultDiv.innerHTML = `<p>Error: ${data.error.message}</p>`;
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                const resultDiv = document.getElementById('addBookResult');
-                resultDiv.innerHTML = `<p>Error: ${error.message}</p>`;
-            });
-        });
-    } else {
-        console.error('Element addBookForm not found');
-    }
-
-    //borrowBook
-    const borrowBookForm = document.getElementById('borrowBookForm');
-    if (borrowBookForm) {
-        borrowBookForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            const borrowDetails = {
-                userId: document.getElementById('borrowUserId').value,
-                userName: document.getElementById('borrowUserName').value,
-                userEmail: document.getElementById('borrowUserEmail').value,
-                userContact: document.getElementById('borrowUserContact').value,
-                bookId: document.getElementById('borrowBookId').value
-            };
-
-            fetch('http://localhost:3000/borrow/borrowBook', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(borrowDetails),
-            })
-            .then(response => response.json())
-            .then(data => {
-                const resultDiv = document.getElementById('borrowBookResult');
-                resultDiv.innerHTML = `<p>${data.message}</p>`;
-            })
-            .catch(error => console.error('Error:', error));
-        });
-    } else {
-        console.error('Element borrowBookForm not found');
-    }
-
-    //returnBook
-    const returnBookForm = document.getElementById('returnBookForm');
-    if (returnBookForm) {
-        returnBookForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            const returnDetails = {
-                userId: document.getElementById('returnUserId').value,
-                bookId: document.getElementById('returnBookId').value,
-            };
-
-            fetch('http://localhost:3000/borrow/returnBook', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(returnDetails),
-            })
-            .then(response => response.json())
-            .then(data => {
-                const resultDiv = document.getElementById('returnBookResult');
-                resultDiv.innerHTML = `<p>${data.message}</p>`;
-            })
-            .catch(error => console.error('Error:', error));
-        });
-    } else {
-        console.error('Element returnBookForm not found');
-    }
-
 });
